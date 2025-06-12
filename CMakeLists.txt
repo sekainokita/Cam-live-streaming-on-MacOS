@@ -1,41 +1,71 @@
 cmake_minimum_required(VERSION 3.10)
-project(gstreamer_streaming)
+project(Cam-live-streaming-on-MacOS C)
 
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
+# C 표준 설정
+set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # GStreamer 패키지 찾기
 find_package(PkgConfig REQUIRED)
 pkg_check_modules(GSTREAMER REQUIRED gstreamer-1.0)
 
-# GStreamer 라이브러리 경로 설정
-link_directories(${GSTREAMER_LIBRARY_DIRS})
-include_directories(${GSTREAMER_INCLUDE_DIRS})
+# GStreamer 경로 직접 지정
+set(GSTREAMER_ROOT "C:/gstreamer/1.0/msvc_x86_64")
+set(GSTREAMER_INCLUDE_DIRS 
+    "${GSTREAMER_ROOT}/include"
+    "${GSTREAMER_ROOT}/include/gstreamer-1.0"
+    "${GSTREAMER_ROOT}/lib/gstreamer-1.0/include"
+    "${GSTREAMER_ROOT}/include/glib-2.0"
+    "${GSTREAMER_ROOT}/lib/glib-2.0/include"
+)
+set(GSTREAMER_LIBRARY_DIRS "${GSTREAMER_ROOT}/lib")
+set(GSTREAMER_LIBRARIES
+    "${GSTREAMER_ROOT}/lib/gstreamer-1.0.lib"
+    "${GSTREAMER_ROOT}/lib/gstvideo-1.0.lib"
+    "${GSTREAMER_ROOT}/lib/gstapp-1.0.lib"
+    "${GSTREAMER_ROOT}/lib/glib-2.0.lib"
+    "${GSTREAMER_ROOT}/lib/gobject-2.0.lib"
+)
 
-# 송신기 타겟
+# 송신기 실행 파일
 add_executable(camera_sender
-    src/sender/main.cpp
-    src/sender/camera_sender.cpp
+    src/sender/main.c
+    src/sender/camera_sender.c
 )
 
-# 수신기 타겟
+# 수신기 실행 파일
 add_executable(video_receiver
-    src/receiver/main.cpp
-    src/receiver/video_receiver.cpp
+    src/receiver/main.c
+    src/receiver/video_receiver.c
 )
 
-# TS 플레이어 타겟
-add_executable(ts_player
-    src/player/ts_player_main.cpp
-    src/player/ts_player.cpp
+# 송신기 헤더 파일 경로 설정
+target_include_directories(camera_sender PRIVATE
+    ${GSTREAMER_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/src/sender
 )
 
-# 각 타겟에 GStreamer 링크
-target_link_libraries(camera_sender ${GSTREAMER_LIBRARIES})
-target_link_libraries(video_receiver ${GSTREAMER_LIBRARIES})
-target_link_libraries(ts_player ${GSTREAMER_LIBRARIES})
+# 수신기 헤더 파일 경로 설정
+target_include_directories(video_receiver PRIVATE
+    ${GSTREAMER_INCLUDE_DIRS}
+    ${CMAKE_SOURCE_DIR}/src/receiver
+)
 
-# 헤더 파일 경로 추가
-target_include_directories(camera_sender PRIVATE ${GSTREAMER_INCLUDE_DIRS} src/sender)
-target_include_directories(video_receiver PRIVATE ${GSTREAMER_INCLUDE_DIRS} src/receiver)
-target_include_directories(ts_player PRIVATE ${GSTREAMER_INCLUDE_DIRS} src/player) 
+# 송신기 링크 설정
+target_link_libraries(camera_sender
+    ${GSTREAMER_LIBRARIES}
+)
+
+# 수신기 링크 설정
+target_link_libraries(video_receiver
+    ${GSTREAMER_LIBRARIES}
+)
+
+# 컴파일러 플래그 설정
+target_compile_options(camera_sender PRIVATE
+    ${GSTREAMER_CFLAGS_OTHER}
+)
+
+target_compile_options(video_receiver PRIVATE
+    ${GSTREAMER_CFLAGS_OTHER}
+) 

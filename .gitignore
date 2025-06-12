@@ -1,5 +1,8 @@
 # 빌드 디렉토리
 build/
+cmake/
+.vs/
+.vscode/
 
 # 실행 파일
 camera_sender
@@ -33,3 +36,6 @@ CMakeFiles/
 
 # 로그 파일
 *.log 
+
+# 기타 파일
+.ts
