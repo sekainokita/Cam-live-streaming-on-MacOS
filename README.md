@@ -1,6 +1,6 @@
-# __GStreamer__ live Streaming Project
+# live Streaming Project
 
-이 프로젝트는 __GStreamer__ RTP와 h.264 패킷을 사용하여 카메라 영상을 스트리밍하는 애플리케이션입니다.
+이 프로젝트는 RTP와 h.264 패킷을 사용하여 카메라 영상을 스트리밍하는 애플리케이션입니다.
 
 ## 기능
 
@@ -12,20 +12,13 @@
 
 ### macOS
 - CMake (3.10 이상)
-- GStreamer 1.0
-- GStreamer 플러그인 (gst-plugins-base, gst-plugins-good, gst-plugins-bad, gst-plugins-ugly)
 - Xcode Command Line Tools
 
 ## 설치 방법
 
 ### macOS
 
-1. Homebrew를 사용하여 GStreamer 설치:
-```bash
-brew install gstreamer gst-plugins-base gst-plugins-good gst-plugins-bad gst-plugins-ugly
-```
-
-2. 프로젝트 빌드:
+1. 프로젝트 빌드:
 ```bash
 mkdir -p build/macos
 cd build/macos
@@ -66,14 +59,6 @@ export GST_PLUGIN_PATH=/opt/homebrew/lib/gstreamer-1.0
 1. 카메라 접근 권한 문제:
    - 시스템 환경설정 > 보안 및 개인 정보 보호 > 개인 정보 보호 > 카메라에서 터미널 앱에 대한 권한을 허용하세요.
 
-2. GStreamer 플러그인 문제:
-   - 모든 필요한 GStreamer 플러그인이 설치되어 있는지 확인하세요.
-   - `GST_PLUGIN_PATH` 환경 변수가 올바르게 설정되어 있는지 확인하세요.
-
-3. 비디오가 보이지 않는 경우:
+2. 비디오가 보이지 않는 경우:
    - 카메라 송신기와 비디오 수신기가 모두 실행 중인지 확인하세요.
    - 방화벽 설정에서 5000번 포트가 차단되어 있지 않은지 확인하세요.
-
-## 라이선스
-
-이 프로젝트는 MIT 라이선스 하에 배포됩니다. 
