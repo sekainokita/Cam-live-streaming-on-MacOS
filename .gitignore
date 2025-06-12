@@ -1,0 +1,35 @@
+# 빌드 디렉토리
+build/
+
+# 실행 파일
+camera_sender
+ts_player
+video_receiver.exe
+ts_player.exe
+
+# IDE 파일
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# 시스템 파일
+.DS_Store
+Thumbs.db
+
+# CMake 생성 파일
+CMakeCache.txt
+CMakeFiles/
+*.cmake
+!CMakeLists.txt
+
+# 컴파일된 파일
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.dylib
+
+# 로그 파일
+*.log 
