@@ -1,6 +1,6 @@
-# GStreamer Streaming Project
+# __GStreamer__ live Streaming Project
 
-이 프로젝트는 GStreamer를 사용하여 카메라 영상을 스트리밍하는 애플리케이션입니다.
+이 프로젝트는 __GStreamer__ RTP와 h.264 패킷을 사용하여 카메라 영상을 스트리밍하는 애플리케이션입니다.
 
 ## 기능
 
